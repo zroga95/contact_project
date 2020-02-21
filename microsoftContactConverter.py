@@ -3,6 +3,8 @@ import csv
 import os
 import json
 from io import BytesIO
+import tkFileDialog
+from Tkinter import *
 
 ocr_url = "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/ocr"
 
@@ -36,7 +38,10 @@ with open("C:\Users\Zachary_Roga\Documents\contactProject\contact_file2.csv", "w
     #print(str(path)+'/'+str(files))
     #print(os.path.basename(files))
     #fileCard=str(path)+'/'+str(files)
-    fileCard= "C:\Users/Zachary_Roga/Documents/contactProject/business_cards/business_card1.jpg"
+    fileCard = ""
+    while (len(fileCard) < 1):
+        fileCard= tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")));
+    
     #try:
     cardText = getText(fileCard)
     #except:
