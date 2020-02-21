@@ -38,15 +38,15 @@ with open("C:\Users\Zachary_Roga\Documents\contactProject\contact_file2.csv", "w
     #print(str(path)+'/'+str(files))
     #print(os.path.basename(files))
     #fileCard=str(path)+'/'+str(files)
-    fileCard = ""
-    while (len(fileCard) < 1):
-        fileCard= tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")));
-    
+    fileCard= tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")));
+    if len(fileCard) < 1:
+        print("No image selected")
     #try:
-    cardText = getText(fileCard)
-    #except:
-    #    print("error")# on "+ str(files))
-    #else:
-    writer.writerow(cardText)
-    #contact_writer = csv.writer(contact_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+    else:
+        cardText = getText(fileCard)
+        #except:
+        #    print("error")# on "+ str(files))
+        #else:
+        writer.writerow(cardText)
+        #contact_writer = csv.writer(contact_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 contact_file.close()
