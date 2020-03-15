@@ -24,10 +24,10 @@ def getText(filePathed):
             for word_info in word_metadata["words"]:
                 word_infos.append(word_info['text'].encode('utf-8'));
                 word_infos.append(word_info['boundingBox']);
-    print word_infos;
+    print(word_infos);
     return word_infos;
 
-with open("C:\Users\Zachary_Roga\Documents\contactProject\contact_file2.csv", "w") as contact_file:
+with open(r"C:\Users\Zachary_Roga\Documents\contactProject\contact_file2.csv", "w") as contact_file:
     writer = csv.writer(contact_file, delimiter=',');
     #commented code for capturing folder
     #for files in os.listdir(path):
