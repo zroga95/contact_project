@@ -3,8 +3,7 @@ import csv
 import os
 import json
 from io import BytesIO
-import tkFileDialog
-from Tkinter import *
+#import tkFileDialog
 
 def getText(filePathed):
     ocr_url = "https://microsoft-azure-microsoft-computer-vision-v1.p.rapidapi.com/ocr";
@@ -24,27 +23,22 @@ def getText(filePathed):
             for word_info in word_metadata["words"]:
                 word_infos.append(word_info['text'].encode('utf-8'));
                 word_infos.append(word_info['boundingBox']);
-    print(word_infos);
+    #print(word_infos);
     return word_infos;
 
-with open(r"C:\Users\Zachary_Roga\Documents\contactProject\contact_file2.csv", "w") as contact_file:
-    writer = csv.writer(contact_file, delimiter=',');
-    #commented code for capturing folder
-    #for files in os.listdir(path):
-    #print(str(path)+'/'+str(files))
-    #print(os.path.basename(files))
-    #fileCard=str(path)+'/'+str(files)
-    path = os.getcwd() + "/business_cards";
+def writeArrayCSV(arrayed, csvPathed):
+    with open(csvPathed, "w") as contact_file:
+        writer = csv.writer(contact_file, delimiter=',');
+        #commented code for capturing folder
+        #for files in os.listdir(path):
+        #print(str(path)+'/'+str(files))
+        #print(os.path.basename(files))
+        #fileCard=str(path)+'/'+str(files)
 
-    fileCard= tkFileDialog.askopenfilename(initialdir = "/",title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")));
-    if len(fileCard) < 1:
-        print("No image selected");
-    #try:
-    else:
-        cardText = getText(fileCard);
         #except:
         #    print("error")# on "+ str(files))
         #else:
-        writer.writerow(cardText);
+        writer.writerow(arrayed);
         #contact_writer = csv.writer(contact_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-contact_file.close();
+    contact_file.close();
+

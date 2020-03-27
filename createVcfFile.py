@@ -25,8 +25,8 @@ def findEmail(contact_info):
 
 
 def findFirstLast(contact_info):
-	first_name_database=base_path + r"\first_names.txt"
-	last_name_database=base_path + r"\last_names.txt"
+	first_name_database=curr_dir + r"\first_names.txt"
+	last_name_database=curr_dir + r"\last_names.txt"
 	possible_options = []
 	first, last  = "", ""
 	for strs in contact_info:
@@ -41,27 +41,32 @@ def findFirstLast(contact_info):
 			last=line
 	return first, last
 
-base_path = r"C:\Users\Zachary_Roga\Documents\contactProject"
-text_src= base_path+r"\contact_file2.csv"
-contact_destin = base_path+ r"\contact_sample.vcf"
-with open(text_src, "r") as contact_file:
-	csv_reader = csv.reader(contact_file, delimiter=',')
-	contact_info = []; #file structure to hold FN, LN, TELEPHONE, EMAIL;)
-	for row in csv_reader:
-		for i in range(1, len(row), 2):
-			contact_info.append(row[i])
-first_name, last_name = findFirstLast(contact_info)
-MyContact = ContactClass(first_name, last_name, findPhoneNum(contact_info), findEmail(contact_info)) #first, last, phone, email
 
-allvcf = open(contact_destin, 'w')
-allvcf.write( 'BEGIN:VCARD' + "\n")
-allvcf.write( 'VERSION:3.0' + "\n")
-allvcf.write( 'N:' + MyContact.first + ';' + MyContact.last + "\n")
-allvcf.write( 'FN:' + MyContact.last + ' ' + MyContact.first + "\n")
-#allvcf.write( 'ORG:' + 'ATI' + "\n")
-allvcf.write( 'TEL;CELL:' + MyContact.tele + "\n")
-allvcf.write( 'EMAIL:' + MyContact.email + "\n")
-allvcf.write( 'END:VCARD' + "\n")
-allvcf.write( "\n")
+def createVCF(text_src):
+	global curr_dir
+	curr_dir = os.getcwd()
+	if text_src == curr_dir:
+		text_src= curr_dir+r"\contact_file2.csv"
 
-contact_file.close()
+	contact_destin = curr_dir+ r"\contact_sample.vcf"
+	with open(text_src, "r") as contact_file:
+		csv_reader = csv.reader(contact_file, delimiter=',')
+		contact_info = []; #file structure to hold FN, LN, TELEPHONE, EMAIL;)
+		for row in csv_reader:
+			for i in range(1, len(row), 2):
+				contact_info.append(row[i])
+	first_name, last_name = findFirstLast(contact_info)
+	MyContact = ContactClass(first_name, last_name, findPhoneNum(contact_info), findEmail(contact_info)) #first, last, phone, email
+
+	allvcf = open(contact_destin, 'w')
+	allvcf.write( 'BEGIN:VCARD' + "\n")
+	allvcf.write( 'VERSION:3.0' + "\n")
+	allvcf.write( 'N:' + MyContact.first + ';' + MyContact.last + "\n")
+	allvcf.write( 'FN:' + MyContact.last + '  ' + MyContact.first + "\n")
+	#allvcf.write( 'ORG:' + 'ATI' + "\n")
+	allvcf.write( 'TEL;CELL:' + MyContact.tele + "\n")
+	allvcf.write( 'EMAIL:' + MyContact.email + "\n")
+	allvcf.write( 'END:VCARD' + "\n")
+	allvcf.write( "\n")
+
+	contact_file.close()
