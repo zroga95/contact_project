@@ -35,10 +35,10 @@ def findFirstLast(contact_info):
 			possible_options.append(match.group())
 	for line in open(first_name_database, "r"):	
 		if line.strip() in possible_options:
-			first=line
+			first=line.strip()
 	for line in open(last_name_database, "r"):	
 		if line.strip() in possible_options:
-			last=line
+			last=line.strip()
 	return first, last
 
 
@@ -47,16 +47,21 @@ def createVCF(text_src):
 	curr_dir = os.getcwd()
 	if text_src == curr_dir:
 		text_src= curr_dir+r"\contact_file2.csv"
-
-	contact_destin = curr_dir+ r"\contact_sample.vcf"
+	
 	with open(text_src, "r") as contact_file:
 		csv_reader = csv.reader(contact_file, delimiter=',')
 		contact_info = []; #file structure to hold FN, LN, TELEPHONE, EMAIL;)
 		for row in csv_reader:
 			for i in range(1, len(row), 2):
 				contact_info.append(row[i])
+	#determine first and last names using dicts
 	first_name, last_name = findFirstLast(contact_info)
-	MyContact = ContactClass(first_name, last_name, findPhoneNum(contact_info), findEmail(contact_info)) #first, last, phone, email
+
+	MyContact = ContactClass(first_name, last_name, findPhoneNum(contact_info), findEmail(contact_info)) 
+	#first, last, phone, email
+
+	#using info from the text to create a contact file
+	contact_destin = curr_dir+ r"\contact_"+ MyContact.first + "_"+ MyContact.last + ".vcf"
 
 	allvcf = open(contact_destin, 'w')
 	allvcf.write( 'BEGIN:VCARD' + "\n")
@@ -70,3 +75,4 @@ def createVCF(text_src):
 	allvcf.write( "\n")
 
 	contact_file.close()
+	return contact_destin
