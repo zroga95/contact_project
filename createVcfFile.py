@@ -75,4 +75,4 @@ def createVCF(text_src):
 	allvcf.write( "\n")
 
 	contact_file.close()
-	return contact_destin
+	return os.path.split(contact_destin)[1]
